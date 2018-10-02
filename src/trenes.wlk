@@ -1,38 +1,36 @@
+import formacionets.*
 class Locomotora{
 
-	var property anchoUtil=10
-	var property largo=50
-    var property pesoMax=1000
-    var pesolocoMotora=100
-    var property cantVagones=1
-	var property velMax=[]
-	var arrastreUtil=null
+	var property pesoMax=1000
+    var peso=100
+    var property velMax=1000
+	var property arrastreUtil
+	var vagon=[]
+	var locomotoras=[]	
 	
     method arrastre(){ 
-        if(pesolocoMotora<=pesoMax)
-    	arrastreUtil= pesolocoMotora - pesoMax
+        if(peso<=pesoMax)
+    	arrastreUtil= peso - pesoMax
       
     else 
      error.throwWithMessage{"No puede arrastrar a la formación"}
 }	
-
-method velocidadLocomotora(velocidad){
-velMax.add{velocidad}
+method acumulArrastre(){
+	return locomotoras.sum{locom=>locom.arrastreUtil()}
 }
-
+ method agregarVagon(form){
+	vagon.add(form)
+	
+}
+  	method puedeMoverse(){
+  	
+		return locomotoras.acumulArrastre() > self.sumPesos()
+	}
+  	
+ method sumPesos(){ return locomotoras.sum{loco=>loco.peso()}}
 }	
 
-class Formaciones{
-   var property vagones=[]
-   var property locomotoras=[]
-   method agregarVagones(vagon){ vagones.add{vagon}}
-   method totalPasajeros(formacion){ vagones.sum{formacion.cantdepasajeros()}}
-   method agregarLocomotoras(locomotora){locomotoras.add{locomotora}}
-   method vagonesLivianos(){return vagones.count{ vagon => vagon.peso()>=2500}
-   }
-  method velMax(){}
-	}
-	
+
 class Vagonpasajeros{
 	  var  property anchoUtil=null
 	  var  property largo=null
