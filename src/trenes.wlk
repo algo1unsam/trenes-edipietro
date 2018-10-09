@@ -1,51 +1,71 @@
-import formacionets.*
-class Locomotora{
+import formacion.*
 
-	var property pesoMax=1000
-    var peso=100
-    var property velMax=1000
-	var property arrastreUtil
-	var vagon=[]
-	var locomotoras=[]	
-	
-    method arrastre(){ 
-        if(peso<=pesoMax)
-    	arrastreUtil= peso - pesoMax
-      
-    else 
-     error.throwWithMessage{"No puede arrastrar a la formación"}
-}	
-method acumulArrastre(){
-	return locomotoras.sum{locom=>locom.arrastreUtil()}
-}
- method agregarVagon(form){
-	vagon.add(form)
-	
-}
-  	method puedeMoverse(){
-  	
-		return locomotoras.acumulArrastre() > self.sumPesos()
+class Locomotora {
+
+	var property pesoMax 
+	var peso
+	var property velMax
+	var property pesoArrastre
+	var vagon = []
+	var locomotoras = []
+
+	method pesoLocomotora(valor) {
+		peso = valor
 	}
-  	
- method sumPesos(){ return locomotoras.sum{loco=>loco.peso()}}
-}	
 
-
-class Vagonpasajeros{
-	  var  property anchoUtil=null
-	  var  property largo=null
-	  	var cantpasajeros=100
-
-	method peso()= cantpasajeros*80
-				
-	method cantdepasajeros(){
+	method velocidadMax(valor) {
+		velMax = valor
+	}
+	
+	method pesoMaxdeArrastre(valor){
 		
-		if (anchoUtil<=2.5){cantpasajeros=largo*8	}
-		else {cantpasajeros=largo*10}
-			}
+		pesoArrastre=valor
+
 }
-class Vagoncarga{
-	var cargamax
-	method cargaMax(valor) {cargamax=valor}
-	method peso()=cargamax+160
+	method arrastreUtil() {
+		return (peso -pesoArrastre)
+	}
+
+	method acumulArrastre() {
+		return locomotoras.sum{ locom => locom.arrastreUtil() }
+	}
+
+	method agregarVagon(form) {
+		vagon.add(form)
+	}
+
+	
+
+	method sumPesos() {
+		return locomotoras.sum{ loco => loco.peso() }
+	}
+
 }
+
+class Vagonpasajeros {
+
+	var property anchoUtil = null
+	var property largo = null
+	var numPasajeros = 100
+
+	method peso() = numPasajeros * 80
+
+	method cantidadPasajeros() {
+		if (anchoUtil <= 2.5) return (8 * largo) else return (10 * largo)
+	}
+
+}
+
+class Vagoncarga {
+
+	var cargamax = null
+	var pesoGuardas = 10
+
+	method cargaMax(valor) {
+		cargamax = valor
+	}
+
+	method peso() = cargamax + 160 + pesoGuardas
+
+}
+
